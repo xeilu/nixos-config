@@ -51,3 +51,6 @@ blkid /dev/nvme0p1 -s PARTUUID
 ```
 nixos-install --root /mnt --cores 0
 ```
+
+# Sources
+[1] https://shen.hong.io/installing-nixos-with-encrypted-root-partition-and-seperate-boot-partition/
