@@ -5,17 +5,17 @@
 ## Encrypt the main drive
 
 ```
-$ cryptsetup luksFormat /dev/sda2
-$ cryptsetup luksOpen /dev/sda2 crypt
+$ cryptsetup luksFormat /dev/nvme0p1 --type luks2
+$ cryptsetup luksOpen /dev/nvme0p1 crypted
 ```
 
 ## Creating logical volumes
 
 ```
-$ sudo pvcreate /dev/mapper/crypted
-$ sudo vgcreate vg /dev/mapper/crypted
-$ sudo lvcreate -L 32G -n swap vg
-$ sudo lvcreate -l '100%FREE' -n nixos vg
+$ pvcreate /dev/mapper/crypted
+$ vgcreate vg /dev/mapper/crypted
+$ lvcreate -L 32G -n swap vg
+$ lvcreate -l '100%FREE' -n nixos vg
 ```
 
 ## Format disks
@@ -29,9 +29,9 @@ $ sudo mkswap -L swap /dev/vg/swap
 ## Mount and generate config
 
 ```
-$ mount /dev/vg/root /mnt
-$ mkdir /mnt/boot
-$ mount /dev/sda1 /mnt/boot
+$ mount /dev/disk/by-label/nixos /mnt
+$ mkdir -p /mnt/boot
+$ mount /dev/sdb1 /mnt/boot
 $ swapon /dev/vg/swap
 ```
 
@@ -39,6 +39,11 @@ $ swapon /dev/vg/swap
 
 ```
 nixos-generate-config --root /mnt
+```
+
+To retrive the UUID
+```
+blkid /dev/nvme0p1 -s PARTUUID
 ```
 
 ## Install
