@@ -30,8 +30,8 @@ $ sudo mkswap -L swap /dev/vg/swap
 
 ```
 $ mount /dev/disk/by-label/nixos /mnt
-$ mkdir -p /mnt/boot
-$ mount /dev/sdb1 /mnt/boot
+$ mkdir -p /mnt/boot/efi
+$ mount /dev/sdb1 /mnt/boot/efi
 $ swapon /dev/vg/swap
 ```
 
